@@ -1,0 +1,16 @@
+{
+  "env": {
+    "node": true
+  },
+  "extends": [
+    "plugin:vue/vue3-recommended",
+    "@vue/typescript/recommended",
+    "@vue/eslint-config-standard-with-typescript/allow-tsx-in-vue"
+  ],
+  "plugins": [
+    "vue" 
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
+}
