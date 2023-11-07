@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const foo = ref(1);
-const sumar = () => foo.value++;
+const contador = ref(1);
+const sumar = () => contador.value++;
 </script>
 
 <template>
@@ -11,7 +11,7 @@ const sumar = () => foo.value++;
     <v-btn @click="sumar">
       Button
     </v-btn>
-    {{ foo }}
+    {{ contador }}
   </div>
 </template>
 
