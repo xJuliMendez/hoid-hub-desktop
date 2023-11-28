@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import '@unocss/reset/tailwind.css';
 
 const router = useRouter();
 </script>
 
 <template>
   <div>
-    <button @click="router.push({name: 'login'})">
+    <button text-red @click="router.push({name: 'login'})">
       Login
     </button>
     <router-view />
