@@ -5,8 +5,8 @@ const contador = ref(1);
 </script>
 
 <template>
-  <v-card>
+  <div>
     Hola que tal {{ contador }}
-  </v-card>
+  </div>
 </template>
 

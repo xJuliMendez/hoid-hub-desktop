@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-const contador = ref(1);
-const sumar = () => contador.value++;
+const router = useRouter();
 </script>
 
 <template>
   <div>
-    Hello world!
-    <v-btn @click="sumar">
-      Button
-    </v-btn>
-    {{ contador }}
+    <button @click="router.push({name: 'login'})">
+      Login
+    </button>
+    <router-view />
   </div>
 </template>
 
