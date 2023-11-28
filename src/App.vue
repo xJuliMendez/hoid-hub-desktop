@@ -7,7 +7,7 @@ const router = useRouter();
 
 <template>
   <div>
-    <button text-red @click="router.push({name: 'login'})">
+    <button text-red @click="router.push({ name: 'login' })">
       Login
     </button>
     <router-view />
