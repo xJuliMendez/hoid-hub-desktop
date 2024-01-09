@@ -6,11 +6,19 @@ const router = useRouter();
 </script>
 
 <template>
-  <div>
+  <div class="app-container">
     <button text-red @click="router.push({ name: 'login' })">
       Login
+    </button>
+    <button text-red @click="router.push({ name: 'landing' })">
+      Landing
     </button>
     <router-view />
   </div>
 </template>
 
+<style>
+body {
+  background-color: #001219;
+}
+</style>
