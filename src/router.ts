@@ -1,17 +1,15 @@
-import AppVue from './App.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import { defineAsyncComponent } from 'vue'
 
 const About = { template: '<div>About</div>' }
 
-const Landing = defineAsyncComponent(() => import('./pages/landing/index.vue'))
-const Login = defineAsyncComponent(() => import('./pages/login/index.vue'))
+const Landing = (() => import('./pages/landing/index.vue'))
+const Login = (() => import('./pages/login/index.vue'))
 
 const routes = [
   {
     path: '/home',
     name: 'home',
-    component: AppVue
+    component: Landing
   },
   {
     path: '/',
