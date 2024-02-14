@@ -1,6 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { postUser } from '../../api/user';
+import { Stomp } from '@stomp/stompjs';
+// import { postUser } from '../../api/user';
+
+
+const socket = new WebSocket('ws://api.hoid-hub-api.com/chat-socket');
+
+const client = Stomp.over(socket);
+client.connect({}, function () {
+  console.log('Connected: ' + client.connected);
+  client.subscribe('/topic/1', function (message) {
+    const messageContent = JSON.parse(message.body);
+    console.log('message', messageContent);
+  });
+});
+
+interface ChatMessage {
+  username: string;
+  message: string;
+}
 
 
 const username = ref('')
@@ -8,11 +26,22 @@ const email = ref('')
 const password = ref('')
 
 function createUser() {
-  postUser({
-    username: username.value,
-    email: email.value,
-    password: password.value
-  })
+  client.send('/app/chat/1', {}, JSON.stringify({ username: 'cliente', message: 'send' }));
+
+  // postUser({
+  //   username: username.value,
+  //   email: email.value,
+  //   password: password.value
+  // })
+
+  // socket.send(JSON.stringify({
+  //   username: username.value,
+  //   email: email.value,
+  //   password: password.value
+  // }))
+  username.value = ''
+  email.value = ''
+  password.value = ''
 }
 
 </script>
