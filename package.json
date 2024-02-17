@@ -23,7 +23,6 @@
     "@typescript-eslint/parser": "^6.13.1",
     "@unocss/preset-icons": "^0.58.3",
     "@vitejs/plugin-vue": "^4.2.3",
-    "[the-collection-you-want]": "link:@iconify-json/[the-collection-you-want]",
     "eslint": "^8.54.0",
     "eslint-config-standard-with-typescript": "^40.0.0",
     "eslint-plugin-import": "^2.25.2",

@@ -12,8 +12,8 @@ const text = {
 </script>
 <template>
     <div class="landing-page"></div>
-    <h1>Welcome to the Landing Page!</h1>
-    <p>Feel free to customize this page to fit your needs.</p>
+    <h1 color-white>Welcome to the Landing Page!</h1>
+    <p color-white>Feel free to customize this page to fit your needs.</p>
     <div class="landing-page-container">
         <Card :content="text">
             <template #header-media>

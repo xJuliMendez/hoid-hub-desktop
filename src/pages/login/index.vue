@@ -1,32 +1,77 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Stomp } from '@stomp/stompjs';
+import { Client, Stomp } from '@stomp/stompjs';
 // import { postUser } from '../../api/user';
-
-
-const socket = new WebSocket('ws://api.hoid-hub-api.com/chat-socket');
-
-const client = Stomp.over(socket);
-client.connect({}, function () {
-  console.log('Connected: ' + client.connected);
-  client.subscribe('/topic/1', function (message) {
-    const messageContent = JSON.parse(message.body);
-    console.log('message', messageContent);
-  });
-});
-
-interface ChatMessage {
-  username: string;
-  message: string;
-}
-
 
 const username = ref('')
 const email = ref('')
 const password = ref('')
 
+
+// const socket = new WebSocket('ws://api.hoid-hub-api.com:8080/ws');
+
+// const connectSocket = () => {
+//   console.log('sending');
+
+//   socket.send(JSON.stringify({
+//     username: username.value,
+//     email: email.value,
+//     password: password.value
+//   }))
+// }
+
+// const closeSocket = () => {
+//   console.log('closing');
+//   socket.close()
+// }
+
+// socket.onopen = () => {
+//   console.log('connected');
+// }
+
+// socket.onmessage = (event) => {
+//   console.log('message', event.data);
+// }
+
+const client = Stomp.over(() => new WebSocket('ws://localhost:8080/ws'));
+
+client.onChangeState = function (frame) {
+  console.log(client.state);
+  console.log('Connected: ' + frame);
+
+  client.subscribe('/topic/greetings', function (message) {
+    console.log('Received: ' + message.body);
+  });
+  console.log('Subscribed');
+
+};
+
+client.onWebSocketError = (error) => {
+  console.error('Error with websocket', error);
+};
+
+client.onStompError = (frame) => {
+  console.error('Broker reported error: ' + frame.headers['message']);
+  console.error('Additional details: ' + frame.body);
+};
+
+
+const connectSocket = () => {
+  client.activate()
+}
+
+const closeSocket = () => client.deactivate()
+
 function createUser() {
-  client.send('/app/chat/1', {}, JSON.stringify({ username: 'cliente', message: 'send' }));
+
+  client.publish({
+    destination: '/app/hello',
+    body: JSON.stringify({
+      username: username.value,
+      email: email.value,
+      password: password.value
+    })
+  })
 
   // postUser({
   //   username: username.value,
@@ -34,11 +79,6 @@ function createUser() {
   //   password: password.value
   // })
 
-  // socket.send(JSON.stringify({
-  //   username: username.value,
-  //   email: email.value,
-  //   password: password.value
-  // }))
   username.value = ''
   email.value = ''
   password.value = ''
@@ -65,6 +105,8 @@ function createUser() {
         type="password" />
     </label>
     <button @click="createUser" border>login</button>
+    <button @click="connectSocket" border>connect</button>
+    <button @click="closeSocket" border>close</button>
   </div>
 </template>
 
